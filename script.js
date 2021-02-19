@@ -14,6 +14,8 @@ function startGame() {
 
     function keepScore(e) {
 
+        resetIcons();
+
         let result = playRound(e);
 
         outputResult(result);
@@ -38,16 +40,32 @@ function startGame() {
         }
     }
 
+    function resetIcons() {
+
+        const svgPlayerIcon = document.querySelector('.player-icon');
+        const svgComputerIcon = document.querySelector('.computer-icon');
+
+        if (svgPlayerIcon != null) {
+            svgPlayerIcon.classList.remove('player-icon');
+            svgPlayerIcon.classList.add('option');
+        }
+
+        if (svgComputerIcon != null) {
+            svgComputerIcon.classList.remove('computer-icon');
+        }
+    }
+
     function playRound(e) {
 
         const playerSelection = e.target.dataset.key;
         const computerSelection = computerPlay();
-        
-        const playerSelectionDiv = document.querySelector('.player-selection');
-        const computerSelectionDiv = document.querySelector('.computer-selection');
     
-        playerSelectionDiv.textContent = "Player chose: " + playerSelection;
-        computerSelectionDiv.textContent = "Computer chose: " + computerSelection;
+        const svgPlayerIcon = document.getElementById(playerSelection);
+        const svgComputerIcon = document.getElementById(computerSelection);
+
+        svgPlayerIcon.classList.remove('option');
+        svgPlayerIcon.classList.add('player-icon');
+        svgComputerIcon.classList.add('computer-icon');
     
         return determineResult(playerSelection, computerSelection);
     }
@@ -56,11 +74,11 @@ function startGame() {
         let randomNumber = Math.random();
     
         if (randomNumber < (1 / 3)) {
-            return "rock";
+            return "Rock";
         } else if (randomNumber > (1 / 3) && randomNumber < ( 2 / 3)) {
-            return "paper";
+            return "Paper";
         } else {
-            return "scissors";
+            return "Scissors";
         }
     }
 
@@ -69,41 +87,41 @@ function startGame() {
         let result = [];
     
         switch (playerSelection) {
-            case "rock":
+            case "Rock":
                 switch (computerSelection) {
-                    case "rock":
+                    case "Rock":
                         return ["It's a draw!", 0];
                         break;
-                    case "paper":
+                    case "Paper":
                         return ["You Lose! Paper covers Rock", -1];
                         break;
-                    case "scissors":
+                    case "Scissors":
                         return ["You Win! Rock smashes Scissors", 1];
                         break;
                 }
                 break;
-            case "paper":
+            case "Paper":
                 switch (computerSelection) {
-                    case "rock":
+                    case "Rock":
                         return ["You Win! Paper covers Rock", 1];
                         break;
-                    case "paper":
+                    case "Paper":
                         return ["It's a draw!", 0];
                         break;
-                    case "scissors":
+                    case "Scissors":
                         return ["You Lose! Scissors cut Paper", -1];
                         break;
                 }
                 break;
-            case "scissors":
+            case "Scissors":
                 switch (computerSelection) {
-                    case "rock":
+                    case "Rock":
                         return ["You Lose! Rock smashes Scissors", -1];
                         break;
-                    case "paper":
+                    case "Paper":
                         return ["You Win! Scissors cut Paper", 1];
                         break;
-                    case "scissors":
+                    case "Scissors":
                         return ["It's a draw!", 0];
                         break;
                 }
